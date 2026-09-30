@@ -28,6 +28,7 @@ Based on this behavior, the backend dynamically constructs queries similar to:
 
 ```sql
 SELECT * FROM tracking WHERE tracking_id = 'COOKIE_VALUE';
+```
 
 ### 2. Password Length Determination
 
@@ -36,7 +37,6 @@ To bound the scope of character extraction, the length of the `administrator` pa
 * **Testing Payload Structure:**
 ```sql
 x' AND (SELECT LENGTH(password) FROM users WHERE username = 'administrator') = N--
-
 ```
 
 
@@ -52,7 +52,6 @@ After determining length, systematic character enumeration was configured using 
 * **Positional Injection Query:**
 ```sql
 x' AND (SELECT SUBSTRING(password, §index§, 1) FROM users WHERE username = 'administrator') = '§chr§'--
-
 ```
 
 
@@ -61,11 +60,24 @@ x' AND (SELECT SUBSTRING(password, §index§, 1) FROM users WHERE username = 'ad
 * **Payload 2 (`chr`):** Lowercase alphanumeric character set (`a-z`, `0-9`).
   
 
-<img src="./payload_example.png" alt="Payload Example" width="800" />
+<figure>
+  <img src="./payload_example.png" alt="Burp Intruder Cluster Bomb Setup" width="800" />
+  <figcaption><em>Figure 1: Configuring Burp Intruder Cluster Bomb attack with payload markers (§index§ and §chr§) to iterate character offsets and values.</em></figcaption>
+</figure>
 
 * **Analysis & Optimization:**
 * Initial multi-position matching (Cluster Bomb mode) evaluated response status and body size across candidate combinations.
 * Filtering response lengths ($11,776$ bytes vs $11,715$ bytes) isolated matches containing the `"Welcome back!"` string.
+
+ <figure>
+  <img src="./response_success.png" alt="Intruder Attack Results and Welcome Back Match" width="800" />
+  <figcaption><em>Figure 2: Intruder attack results filtered by response length (11,776 bytes), confirming successful character matches via the highlighted "Welcome back!" oracle message.</em></figcaption>
+</figure>
+
+<figure>
+  <img src="./response_fail.png" alt="FALSE Condition Intruder Response" width="800" />
+  <figcaption><em>Figure 3: Unsuccessful character attempt returning a shorter response length (11,715 bytes) and 0 matches for the "Welcome back!" indicator string, confirming a FALSE boolean condition.</em></figcaption>
+</figure>
 * Remaining unconfirmed character positions were manually verified via targeted offset adjustments to complete final credential recovery.
 
 
