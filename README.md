@@ -17,8 +17,8 @@ This repository documents hands-on security research and vulnerability assessmen
   - **Focus:** Boolean-based blind SQLi, logic verification, character extraction via conditional responses, parameterized query defense.
 
 ### 2. Authentication & Session Management
-* [Authentication Lab Write-up Title](./Authentication/ip-header-spoofing/README.md)
-  - **Focus:** Multi-factor authentication logic, session token validation, access control enforcement.
+* [Username Enumeration via Response Timing & IP Rate-Limit Bypass](./Authentication/ip-header-spoofing/README.md)
+  - **Focus:** Time-based side-channel analysis, HTTP `X-Forwarded-For` header spoofing, rate-limiting evasion, and password brute-forcing.
 
 ---
 
