@@ -62,7 +62,7 @@ username=§candidate_user§&password=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 Monitoring Burp Intruder timing metrics (`Response received` and `Response completed`) revealed uniform short durations across invalid usernames, while one specific username consistently exhibited a significantly longer response time, confirming a valid account.
   <figure>
  <img src="./valid_user.png" alt="Pitchfork Attack Response Timing Analysis" width="800" />
-  <figcaption><em>Figure 3: Burp Intruder Pitchfork attack results sorted by response time, isolating the valid username (ec2-user) via a significantly longer response delay (194ms) compared to invalid attempts.</em></figcaption>
+  <figcaption><em>Figure 2: Burp Intruder Pitchfork attack results sorted by response time, isolating the valid username (ec2-user) via a significantly longer response delay (194ms) compared to invalid attempts.</em></figcaption>
 </figure>
 
 
